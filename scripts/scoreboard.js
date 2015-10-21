@@ -3,6 +3,8 @@
 
     var Scoreboard = require('../lib/scoreboard.js');
     var scoreboard = new Scoreboard();
+    var Regexp = require('../lib/regexp.js');
+    var reg = new Regexp(robot.name);
 
     var emot = function(score) {
       if (score > 50) {
@@ -16,7 +18,7 @@
       }
     }
 
-    robot.hear(/^\+1 \@?(.+)/i, function(res) {
+    robot.hear(reg.exp('\+1 \@?(.+)'), function(res) {
       if (res.match[1].length > 64) {
         return res.reply(':reject: too many letters')
       }
@@ -27,7 +29,7 @@
       );
     });
 
-    robot.hear(new RegExp('^' + robot.name + ' set ([\\w\\d\\.]+) (\\d+)', 'i'), function(res) {
+    robot.hear(new RegExp(robot.name + ' set ([\\w\\d\\.]+) (\\d+)', 'i'), function(res) {
       var score = scoreboard.set(res.match[1], res.match[2]);
       if (res.message.user.name !== 'jon') return;
       console.log('you forced ' + res.match[1] + ' to ' + res.match[2]);
