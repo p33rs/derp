@@ -1,4 +1,4 @@
-(function() 
+(function() {
   module.exports = function(robot) {
     var timestamp = new Date();
     robot.leave(function(res) {
