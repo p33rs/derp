@@ -3,6 +3,8 @@
 
     var Scoreboard = require('../lib/scoreboard.js');
     var scoreboard = new Scoreboard();
+    var Auth = require('../lib/auth.js');
+    var auth = new Auth();
     var Regexp = require('../lib/regexp.js');
     var reg = new Regexp(robot.name);
 
@@ -18,27 +20,32 @@
       }
     }
 
-    robot.hear(reg.exp('\+1 \@?(.+)'), function(res) {
+    robot.hear(reg.exp('\\+1 \\@?(.+)'), function(res) {
       if (res.match[1].length > 64) {
         return res.reply(':reject: too many letters')
       }
       var score = scoreboard.add(res.match[1]);
       console.log(res.message.user.name + ' upvoted ' + res.match[1]);
+      if (res.match[1] === 'derp') {
+        return res.reply(':keke: thanks! i have ' + score.toString() + ' points now.');
+      }
       return res.reply(
         emot(score) + res.match[1] + ' now has ' + score.toString() + ' points.'
       );
     });
 
-    robot.hear(new RegExp(robot.name + ' set ([\\w\\d\\.]+) (\\d+)', 'i'), function(res) {
+    robot.hear(reg.exp(robot.name + ' set (.+) (\\d+)', 'i'), function(res) {
       var score = scoreboard.set(res.match[1], res.match[2]);
-      if (res.message.user.name !== 'jon') return;
+      if (!auth.isAdmin(res.message.user.name)) {
+        return;
+      }
       console.log('you forced ' + res.match[1] + ' to ' + res.match[2]);
       return res.reply(
         emot(score) + res.match[1] + ' now has ' + score.toString() + ' points.'
       );
     });
 
-    robot.hear(new RegExp(robot.name + ' get\\s?([\\w\\d\\.]*)', 'i'), function(res) {
+    robot.hear(reg.exp(robot.name + ' get\\s?(.+)', 'i'), function(res) {
       var thing = res.match[1] ? res.match[1] : res.message.user.name;
       var score = scoreboard.get(thing);
       console.log(res.message.user.name + ' requested ' + thing);
@@ -47,7 +54,7 @@
       );
     });
 
-    robot.hear(new RegExp(robot.name + ' top', 'i'), function(res) {
+    robot.hear(reg.exp(robot.name + ' top', 'i'), function(res) {
         var score = scoreboard.get();
         var tuples = [];
         for (var key in score) { tuples.push([key, score[key]]); }
