@@ -1,62 +1,50 @@
 (function() {
   module.exports = function(robot) {
-    var jsonfile = require('jsonfile');
-    var scoreboard = {
-        file: '/home/ubuntu/scores.json',
-        add: function(name) {
-            var current = this.get();
-console.log(current);
-            if (current && current[name]) {
-                current[name] = current[name] + 1;
-            } else {
-                current[name] = 1;
-            }
-            this.save(current);
-            return current[name];
-        },
-        set: function(name, value) {
-            var current = this.get();
-            current[name] = parseInt(value, 10);
-            this.save(current);
-            return value;
-        },
-        get: function(name) {
-            var current = jsonfile.readFileSync(this.file);
-            if (name && current[name]) {
-                return current[name];
-            } else if (name) {
-                return 0;
-            } 
-            else if (current) {
-                return current;
-            }
-            return {};
-        },
-        save: function(data) {
-            jsonfile.writeFile(this.file, data);
-        }
-    };
 
-    robot.hear(/\+1 \@?([\w\d]+)/i, function(res) {
-        var score = scoreboard.add(res.match[1]);
-        console.log(res.message.user.name + ' upvoted ' + res.match[1]);
-        return res.reply(res.match[1] + ' now has ' + score.toString() + ' points.');
+    var Scoreboard = require('../lib/scoreboard.js');
+    var scoreboard = new Scoreboard();
+
+    var emot = function(score) {
+      if (score > 50) {
+        return ':aaaaa:';
+      } else if (score > 25) {
+        return ':aaa';
+      } else if (score > 10) {
+        return ':golfclap:';
+      } else {
+        return ':simple_smile:'
+      }
+    }
+
+    robot.hear(/^\+1 \@?(.+)/i, function(res) {
+      if (res.match[1].length > 64) {
+        return res.reply(':reject: too many letters')
+      }
+      var score = scoreboard.add(res.match[1]);
+      console.log(res.message.user.name + ' upvoted ' + res.match[1]);
+      return res.reply(
+        emot(score) + res.match[1] + ' now has ' + score.toString() + ' points.'
+      );
     });
 
-    robot.hear(new RegExp(robot.name + ' set ([\\w\\d\\.]+) (\\d+)', 'i'), function(res) {
-        var score = scoreboard.set(res.match[1], res.match[2]);
-        if (res.message.user.name !== 'jon') return;
-        console.log('you forced ' + res.match[1] + ' to ' + res.match[2]);
-        return res.reply(res.match[1] + ' now has ' + score.toString() + ' points.');
+    robot.hear(new RegExp('^' + robot.name + ' set ([\\w\\d\\.]+) (\\d+)', 'i'), function(res) {
+      var score = scoreboard.set(res.match[1], res.match[2]);
+      if (res.message.user.name !== 'jon') return;
+      console.log('you forced ' + res.match[1] + ' to ' + res.match[2]);
+      return res.reply(
+        emot(score) + res.match[1] + ' now has ' + score.toString() + ' points.'
+      );
     });
 
     robot.hear(new RegExp(robot.name + ' get\\s?([\\w\\d\\.]*)', 'i'), function(res) {
-        var thing = res.match[1] ? res.match[1] : res.message.user.name; 
-        var score = scoreboard.get(thing);
-        console.log(res.message.user.name + ' requested ' + thing);
-        return res.reply(thing + ' now has ' + score.toString() + ' points.');
+      var thing = res.match[1] ? res.match[1] : res.message.user.name;
+      var score = scoreboard.get(thing);
+      console.log(res.message.user.name + ' requested ' + thing);
+      return res.reply(
+        emot(score) + res.match[1] + ' now has ' + score.toString() + ' points.'
+      );
     });
- 
+
     robot.hear(new RegExp(robot.name + ' top', 'i'), function(res) {
         var score = scoreboard.get();
         var tuples = [];

@@ -1,7 +1,7 @@
 (function() {
   module.exports = function(robot) {
     var Auth = require('../lib/auth.js');
-    auth = new Auth();
+    var auth = new Auth();
     robot.hear(/!admin (.*)/i, function(res) {
         var target = res.match[1];
         if (auth.isAdmin(res.message.room) && auth.isAdmin(res.message.user.name)) {

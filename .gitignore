@@ -4,4 +4,5 @@ node_modules
 run-irc.sh
 run-slack.sh
 storage/*.json
-
+*.iml
+.idea
