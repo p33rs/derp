@@ -3,3 +3,5 @@ node_modules
 .hubot_history
 run-irc.sh
 run-slack.sh
+storage/*.json
+
