@@ -44,7 +44,7 @@
                 if (data[params.name]) {
                     return robot.messageRoom(
                         res.message.user.name,
-                        'Standup for @' + data[params.name] + ': ' + data[params.name]
+                        'Standup for @' + params.name + ': ' + data[params.name]
                     );
                 } else {
                     return robot.messageRoom(
