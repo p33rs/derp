@@ -24,8 +24,9 @@
         if (current[room][url].poster === poster) {
           return;
         }
+        console.log('repost-shaming ' + poster);
         return res.reply(
-          ':rolleyes: ' + repost.poster + ' posted that ' + moment(repost.time).fromNow() + '.'
+          ':smirk: ' + repost.poster + ' posted that ' + moment(repost.time).fromNow() + '.'
         );
       }
 
