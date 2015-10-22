@@ -1,5 +1,8 @@
 (function() {
   module.exports = function(robot) {
+    
+    var Auth = require('../lib/auth.js');
+    var auth = new Auth();
     var Regexp = require('../lib/regexp.js');
     var reg = new Regexp(robot.name);
 
