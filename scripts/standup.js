@@ -35,12 +35,14 @@
             var params = parse(res.match[3]?res.match[3].split(' '):[]);
             if (params.text) {
                 standup.save(res.message.user.name, params.text);
+                console.log(res.message.user.name + ' checked in.');
                 return robot.messageRoom(
                     res.message.user.name,
                     'Thanks for checking in!'
                 );
             } else if (params.name) {
                 var data = standup.load(params.date);
+                console.log(res.message.user.name + ' requested ' + data[params.name] + ' standup.');
                 if (params.name === 'all') {
                     for (var user in data) {
                         return robot.messageRoom(
@@ -67,6 +69,7 @@
                         users.push(user);
                     }
                 }
+                console.log(res.message.user.name + ' requested standup status.');
                 if (users.length) {
                     return res.reply(
                         'The following users checked in: ' + users.join(', ') + '.'
