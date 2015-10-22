@@ -41,7 +41,14 @@
                 );
             } else if (params.name) {
                 var data = standup.load(params.date);
-                if (data[params.name]) {
+                if (params.name === 'all') {
+                    for (var user in data) {
+                        return robot.messageRoom(
+                            res.message.user.name,
+                            'Standup for @' + user + ': ' + data[user]
+                        );
+                    }
+                } else if (data[params.name]) {
                     return robot.messageRoom(
                         res.message.user.name,
                         'Standup for @' + params.name + ': ' + data[params.name]
