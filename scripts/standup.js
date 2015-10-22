@@ -49,11 +49,11 @@
                 } else {
                     return robot.messageRoom(
                         res.message.user.name,
-                        'That user hasn\'t checked in yet today.'
+                        'That user hasn\'t checked in ' + (params.date ? 'on that date' : 'yet today') + '.'
                     );
                 }
             } else {
-                var data = standup.load();
+                var data = standup.load(params.date);
                 var users = [];
                 for (var user in data) {
                     if (data.hasOwnProperty(user)) {
@@ -62,7 +62,11 @@
                 }
                 if (users.length) {
                     return res.reply(
-                        'The following users have checked in today: ' + users.join(', ') + '.'
+                        'The following users checked in: ' + users.join(', ') + '.'
+                    );
+                } else if (params.date) {
+                    return res.reply(
+                        'No standup occurred on that day.'
                     );
                 } else {
                     return res.reply(
