@@ -1,7 +1,7 @@
 (function() {
   module.exports = function(robot) {
     var exempt = ['ross', 'jasongriffith'];
-    robot.hear(/((is|are) (seriously |literally )?(bad|terrible|awful|the worst)|sucks|suck).?\S*$/i, function(res) {
+    robot.hear(/((is|are) (seriously |literally )?(bad|terrible|awful|the worst)|sucks?).?\S*$/i, function(res) {
       if (exempt.indexOf(res.message.user.name) !== -1) {
         return;
       }
