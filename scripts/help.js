@@ -15,7 +15,9 @@
                 // 'Votes last ten minutes by default, but you can specify a time like this: ',
                 // '`!vote +30 Question \\Answer\\Answer` :arrow_left: Set a 30 minute timer',
                 // 'You\'ll receive more info on polls when you create one.',
-                '!form will get you a link to the office request form.',
+                '`!standup <text>` will let you record your plans for the day. `!standup` alone will tell you who\'s already checked in.',
+                '`!standup <name>` will PM you that user\'s standup for the day.',
+                '`!form` will get you a link to the office request form.',
                 'You can also say `!roll` to roll dice. If you want, you can roll multiple dice using RPG notation: `!roll 2d12`'
             ];
             if (auth.isAdmin(res.message.user.name)) {
