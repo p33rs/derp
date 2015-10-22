@@ -9,7 +9,7 @@
             'andrew',
             'brendan'
         ]; // lol!
-        robot.hear(/((is|are) (seriously |literally )?(bad|terrible|awful|the worst)|sucks?).?\S*$/i, function(res) {
+        robot.hear(/((is|are) (seriously |literally )?(bad|terrible|awful|the worst)|sucks?).?\s*$/i, function(res) {
             if (
                 blacklist.indexOf(res.message.user.name) !== -1
                 || (whitelist.length && whitelist.indexOf(res.message.user.name) === -1)) {
