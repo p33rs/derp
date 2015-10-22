@@ -2,14 +2,16 @@
     module.exports = function(robot) {
         var maxDice = 20;
         var maxSides = 256;
-        robot.hear(/!roll\s?((\d+)?d(\d+))?$/i, function(res) {
+        var Regexp = require('../lib/regexp.js');
+        var reg = new Regexp(robot.name);
+        robot.hear(reg.exp('!roll\s?((\d+)?d(\d+))?$', 'i'), function(res) {
             var dice = 1;
             var sides = 6;
-            if (res.match[2]) {
-                dice = parseInt(res.match[2], 10);
-            }
             if (res.match[3]) {
-                sides = parseInt(res.match[3], 10)
+                dice = parseInt(res.match[3], 10);
+            }
+            if (res.match[4]) {
+                sides = parseInt(res.match[4], 10)
             }
             if (dice < 1 || sides < 2 || dice > maxDice || sides > maxSides) {
                 console.log(res.message.user.name + ' tried to roll a ' + dice.toString() + 'd' + sides.toString());
