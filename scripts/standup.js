@@ -35,6 +35,10 @@
             var params = parse(res.match[3]?res.match[3].split(' '):[]);
             if (params.text) {
                 standup.save(res.message.user.name, params.text);
+                return robot.messageRoom(
+                    res.message.user.name,
+                    'Thanks for checking in!'
+                );
             } else if (params.name) {
                 var data = standup.load(params.date);
                 if (data[params.name]) {
