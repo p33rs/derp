@@ -54,7 +54,12 @@
                 }
             } else {
                 var data = standup.load();
-                var users = data.getOwnPropertyNames();
+                var users = [];
+                for (var user in data) {
+                    if (data.hasOwnProperty(user)) {
+                        users.push(user);
+                    }
+                }
                 if (users.length) {
                     return res.reply(
                         'The following users have checked in today: ' + users.join(', ') + '.'
