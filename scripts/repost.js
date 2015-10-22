@@ -2,6 +2,7 @@
   module.exports = function(robot) {
     var fs = require ('fs');
     var jsonfile = require('jsonfile');
+    var moment = require('moment');
     var filename = '/home/jon/hubot/storage/repost.json';
 
     robot.hear(/https?:\/\/\S+/i, function(res) {
@@ -33,7 +34,7 @@
       }
       current[room][url] = {
         poster: res.message.user.name,
-        time: Date.getTime()
+        time: Date.now()
       }
 
       jsonfile.writeFileSync(filename, current);
