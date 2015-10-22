@@ -22,12 +22,12 @@
 
     robot.hear(reg.exp('\\+1 \\@?(.+)'), function(res) {
       if (res.match[1].length > 64) {
-        return res.reply(':reject: too many letters')
+        return res.reply(':neutral_face: tl;dr, not counting')
       }
       var score = scoreboard.add(res.match[1]);
       console.log(res.message.user.name + ' upvoted ' + res.match[1]);
       if (res.match[1] === 'derp') {
-        return res.reply(':keke: thanks! i have ' + score.toString() + ' points now.');
+        return res.reply(':blush: thanks! i have ' + score.toString() + ' points now.');
       }
       return res.reply(
         emot(score) + res.match[1] + ' now has ' + score.toString() + ' points.'
@@ -64,13 +64,13 @@
             return a > b ? -1 : (a < b ? 1 : 0);
         });
 
-        var result = 'The winners are: ';
+        var result = ':eng101: The winners are: ';
         for (var i = 0; i < tuples.length && i < 5; i++) {
             result += tuples[i][0] + ' (' + parseInt(tuples[i][1], 10) + ') ';
         }
 
         if (tuples.length > 5) {
-            result += 'and the loser is ' + tuples[tuples.length - 1][0] + ' (' + parseInt(tuples[tuples.length - 1][1], 10) + ') ';
+           // result += 'and the loser is ' + tuples[tuples.length - 1][0] + ' (' + parseInt(tuples[tuples.length - 1][1], 10) + ') ';
         }
 
         console.log(res.message.user.name + ' requested top');

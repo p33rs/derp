@@ -13,7 +13,7 @@
         }
         if (dice < 1 || sides < 2 || dice > maxDice || sides > maxSides) {
             console.log(res.message.user.name + ' tried to roll a ' + dice.toString() + 'd' + sides.toString());
-            return res.reply('Max dice is ' + maxDice.toString() + ', max sides is ' + maxSides.toString());
+            return res.reply(':popo: Max dice is ' + maxDice.toString() + ', max sides is ' + maxSides.toString());
         }
         var result = 'Rolled ' + dice.toString() + 'd' + sides.toString() + ': ';
         for (var i = 0; i < dice; i++) {
