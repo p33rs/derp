@@ -11,8 +11,8 @@
       if (!auth.isAdmin(res.message.user.name) || res.message.user.name !== res.message.room) {
         return;
       }
-      var dest = res.match[1];
-      var msg = res.match[2];
+      var dest = res.match[2];
+      var msg = res.match[3];
       console.log(res.message.user.name + ', to ' + dest + ': ' + msg);
       return robot.messageRoom(dest, msg);
     });
