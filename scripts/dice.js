@@ -4,7 +4,7 @@
         var maxSides = 256;
         var Regexp = require('../lib/regexp.js');
         var reg = new Regexp(robot.name);
-        robot.hear(reg.exp('!roll\s?((\d+)?d(\d+))?$', 'i'), function(res) {
+        robot.hear(reg.exp('!roll\\s?((\\d+)?d(\\d+))?$', 'i'), function(res) {
             var dice = 1;
             var sides = 6;
             if (res.match[3]) {
