@@ -42,7 +42,7 @@
                 );
             } else if (params.name) {
                 var data = standup.load(params.date);
-                console.log(res.message.user.name + ' requested ' + params.name; + ' standup.');
+                console.log(res.message.user.name + ' requested ' + params.name + ' standup.');
                 if (params.name === 'all') {
                     var results = [];
                     for (var user in data) {
