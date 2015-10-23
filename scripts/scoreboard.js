@@ -30,7 +30,7 @@
                 return res.reply(':blush: thanks! i have ' + score.toString() + ' points now.');
             }
             return res.reply(
-                emot(score) + res.match[2] + ' now has ' + score.toString() + ' points.'
+                emot(score) + ' ' + res.match[2] + ' now has ' + score.toString() + ' points.'
             );
         });
 
@@ -41,7 +41,7 @@
             }
             console.log('you forced ' + res.match[2] + ' to ' + res.match[3]);
             return res.reply(
-                emot(score) + res.match[2] + ' now has ' + score.toString() + ' points.'
+                emot(score) + ' ' + res.match[2] + ' now has ' + score.toString() + ' points.'
             );
         });
 
@@ -50,7 +50,7 @@
             var score = scoreboard.get(thing);
             console.log(res.message.user.name + ' requested ' + thing);
             return res.reply(
-                emot(score) + res.match[2] + ' now has ' + score.toString() + ' points.'
+                emot(score) + ' ' + res.match[2] + ' now has ' + score.toString() + ' points.'
             );
         });
 
