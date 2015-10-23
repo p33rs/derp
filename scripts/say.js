@@ -18,7 +18,7 @@
             return robot.messageRoom(dest, msg);
         });
 
-      robot.hear(reg.exp('say(s|m|l|b) (\\S+) (.*)', 'i'), function(res) {
+      robot.hear(reg.exp('say(s|m|l|b) @?(\\S+) (.*)', 'i'), function(res) {
           // must be pm from admin
           if (!auth.isAdmin(res.message.user.name) || res.message.user.name !== res.message.room) {
               return;
