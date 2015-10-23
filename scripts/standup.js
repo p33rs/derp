@@ -42,14 +42,16 @@
                 );
             } else if (params.name) {
                 var data = standup.load(params.date);
-                console.log(res.message.user.name + ' requested ' + data[params.name] + ' standup.');
+                console.log(res.message.user.name + ' requested ' + params.name; + ' standup.');
                 if (params.name === 'all') {
+                    var results = [];
                     for (var user in data) {
-                        return robot.messageRoom(
-                            res.message.user.name,
-                            'Standup for @' + user + ': ' + data[user]
-                        );
+                        results.push('Standup for @' + user + ': ' + data[user]);
                     }
+                    return robot.messageRoom(
+                        res.message.user.name,
+                        results.length?results.join('; '):'No standups for the day.'
+                    );
                 } else if (data[params.name]) {
                     return robot.messageRoom(
                         res.message.user.name,
