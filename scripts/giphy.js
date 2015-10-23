@@ -44,7 +44,7 @@
             if (res.match[2]) {
                 return robot.messageRoom(
                     res.message.user.name,
-                    res.match[2] + ' posted ' + (current[res.match[2]] ? current[res.match[2]] : 0).toString() + 'gifs.'
+                    res.match[2] + ' posted ' + (current[res.match[2]] ? current[res.match[2]] : 0).toString() + ' gifs.'
                 );
             } else {
                 var sorted = [];
