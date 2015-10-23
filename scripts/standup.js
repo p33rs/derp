@@ -46,7 +46,7 @@
                 if (params.name === 'all') {
                     var results = [res.message.user.name];
                     for (var user in data) {
-                        results.push('Standup for @' + user + ': ' + data[user]);
+                        results.push('@' + user + ': ' + data[user]);
                     }
                     return robot.messageRoom.apply(
                         robot,
