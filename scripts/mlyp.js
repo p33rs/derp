@@ -17,5 +17,8 @@
             }
             return res.reply(':dance: much like your posting');
         });
+        robot.hear(/(i've seen|i saw)/i, function(res) {
+            return res.reply(':sheep: I\'ve seen things you people wouldn\'t believe.');
+        });
     }
 }).call(this);
