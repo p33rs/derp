@@ -38,7 +38,7 @@
             return;
         });
 
-        robot.hear(reg.exp('!giphy\s?(\S+)', 'i'), function(res) {
+        robot.hear(reg.exp('!giphy\\s?(\\S+)?', 'i'), function(res) {
           var current = load();
           if (res.match[2]) {
             return robot.messageRoom(
