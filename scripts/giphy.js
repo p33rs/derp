@@ -38,31 +38,32 @@
             return;
         });
 
-        robot.hear(reg.exp('!giphy\\s?(\\S+)?', 'i'), function(res) {
-          var current = load();
-          if (res.match[2]) {
-            return robot.messageRoom(
-              res.message.user.name,
-              current[res.match[2]] ? current[res.match[2]] : 0
-            );
-          } else {
-            var sorted = [];
-            for (var user in current) {
-              sorted.push([
-                user,
-                current[user]
-              ]);
+        robot.hear(reg.exp('!giphy\\s?@?(\\S+)?', 'i'), function(res) {
+            console.log(res.message.user.name + ' requested gif stats.');
+            var current = load();
+            if (res.match[2]) {
+                return robot.messageRoom(
+                    res.message.user.name,
+                    res.match[2] + ' posted ' + (current[res.match[2]] ? current[res.match[2]] : 0).toString() + 'gifs.'
+                );
+            } else {
+                var sorted = [];
+                for (var user in current) {
+                    sorted.push([
+                        user,
+                        current[user]
+                    ]);
+                }
+                sorted.sort(function(a, b) {
+                    a = a[1];
+                    b = b[1];
+                    return a > b ? -1 : (a < b ? 1 : 0);
+                });
+                return robot.messageRoom(
+                    res.message.user.name,
+                    sorted.map(function(v) {return v[0] + ' (' + v[1] + ')';}).join(', ')
+                );
             }
-            sorted.sort(function(a, b) {
-              a = a[1];
-              b = b[1];
-              return a > b ? -1 : (a < b ? 1 : 0);
-            });
-            return robot.messageRoom(
-                res.message.user.name,
-                sorted.map(function(v) {return v[0] + ' (' + v[1] + ')';}).join(', ')
-            );
-          }
         });
 
   }

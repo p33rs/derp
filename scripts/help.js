@@ -18,7 +18,8 @@
                 '`!standup <text>` will let you record your plans for the day. `!standup` alone will tell you who\'s already checked in.',
                 '`!standup <name>` will PM you that user\'s standup for the day. You can also say `!standup all`.',
                 '`!form` will get you a link to the office request form.',
-                'You can also say `!roll` to roll dice. If you want, you can roll multiple dice using RPG notation: `!roll 2d12`'
+                '`!roll` to roll dice. If you want, you can roll multiple dice using RPG notation: `!roll 2d12`',
+                '`!giphy`, optionally specifying a username (`!giphy jon`), to see who abuses giphy the most.'
             ];
             if (auth.isAdmin(res.message.user.name)) {
                 doc.push(
