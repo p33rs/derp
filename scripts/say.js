@@ -31,7 +31,7 @@
               l: 'Roman',
               b: 'Sub-Zero'
           };
-          console.log(res.message.user.name + ', to ' + dest + ': ' + msg);
+          console.log(res.message.user.name + ', to ' + dest + ' (' + fonts[res.match[2]] + '): ' + msg);
           var msgFormatted = '```\n' + figlet.textSync(msg, {font: fonts[res.match[2]]}) + '\n```';
           return robot.messageRoom(dest, msgFormatted);
       });
