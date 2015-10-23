@@ -44,13 +44,13 @@
                 var data = standup.load(params.date);
                 console.log(res.message.user.name + ' requested ' + params.name + ' standup.');
                 if (params.name === 'all') {
-                    var results = [];
+                    var results = [res.message.user.name];
                     for (var user in data) {
                         results.push('Standup for @' + user + ': ' + data[user]);
                     }
-                    return robot.messageRoom(
-                        res.message.user.name,
-                        results.length?results.join('; '):'No standups for the day.'
+                    return robot.messageRoom.apply(
+                        robot,
+                        results
                     );
                 } else if (data[params.name]) {
                     return robot.messageRoom(
