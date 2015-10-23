@@ -21,36 +21,36 @@
         }
 
         robot.hear(reg.exp('\\+1 \\@?(.+)'), function(res) {
-            if (res.match[1].length > 64) {
+            if (res.match[2].length > 64) {
                 return res.reply(':neutral_face: tl;dr, not counting')
             }
-            var score = scoreboard.add(res.match[1]);
-            console.log(res.message.user.name + ' upvoted ' + res.match[1]);
-            if (res.match[1] === 'derp') {
+            var score = scoreboard.add(res.match[2]);
+            console.log(res.message.user.name + ' upvoted ' + res.match[2]);
+            if (res.match[2] === 'derp') {
                 return res.reply(':blush: thanks! i have ' + score.toString() + ' points now.');
             }
             return res.reply(
-                emot(score) + res.match[1] + ' now has ' + score.toString() + ' points.'
+                emot(score) + res.match[2] + ' now has ' + score.toString() + ' points.'
             );
         });
 
         robot.hear(reg.exp(robot.name + ' set (.+) (\\d+)', 'i'), function(res) {
-            var score = scoreboard.set(res.match[1], res.match[2]);
+            var score = scoreboard.set(res.match[2], res.match[3]);
             if (!auth.isAdmin(res.message.user.name)) {
                 return;
             }
-            console.log('you forced ' + res.match[1] + ' to ' + res.match[2]);
+            console.log('you forced ' + res.match[2] + ' to ' + res.match[3]);
             return res.reply(
-                emot(score) + res.match[1] + ' now has ' + score.toString() + ' points.'
+                emot(score) + res.match[2] + ' now has ' + score.toString() + ' points.'
             );
         });
 
         robot.hear(reg.exp(robot.name + ' get\\s?(.+)', 'i'), function(res) {
-            var thing = res.match[1] ? res.match[1] : res.message.user.name;
+            var thing = res.match[2] ? res.match[2] : res.message.user.name;
             var score = scoreboard.get(thing);
             console.log(res.message.user.name + ' requested ' + thing);
             return res.reply(
-                emot(score) + res.match[1] + ' now has ' + score.toString() + ' points.'
+                emot(score) + res.match[2] + ' now has ' + score.toString() + ' points.'
             );
         });
 
