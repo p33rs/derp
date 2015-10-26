@@ -5,10 +5,13 @@
         var auth = new Auth();
         var Regexp = require('../lib/regexp.js');
         var reg = new Regexp(robot.name);
-        robot.hear(reg.exp('!help$', 'i'), function(res) {
+        robot.hear(reg.exp('!help\\s?(\\S+)$', 'i'), function(res) {
+            var target = (res.match[2] && auth.isAdmin(res.message.user.name))
+                ? res.match[2]
+                : res.message.user.name;
             var doc = [
-                res.message.user.name, // DO NOT REMOVE
-                ':sparkling_heart: Hi! Most commands work in chat and in private.',
+                target, // DO NOT REMOVE
+                ':smile: Hi! Most commands work in chat and in private.',
                 'You can upvote things with `+1`. You can say `derp get <thing>` to retrieve a score, or `derp top` to see winners.',
                 // 'To create a poll, say `!vote <thing>` and then a list of options. Each option should start with a backslash. Like:',
                 // '`!vote Who is the best pop artist? \\Taylor Swift\\Taylor Swift\\Also Taylor Swift`',
@@ -21,7 +24,7 @@
                 '`!roll` to roll dice. If you want, you can roll multiple dice using RPG notation: `!roll 2d12`',
                 '`!giphy`, optionally specifying a username (`!giphy jon`), to see who abuses giphy the most.'
             ];
-            if (auth.isAdmin(res.message.user.name)) {
+            if (auth.isAdmin(target)) {
                 doc.push(
                     ':toot: _Hey,_ aren\'t you special? Someone gave you admin privs, so you can also ...',
                     '`say <dest> <text>` to send messages to channels or other users',
