@@ -22,13 +22,15 @@
                 '`!standup <name>` will PM you that user\'s standup for the day. You can also say `!standup all`.',
                 '`!form` will get you a link to the office request form.',
                 '`!roll` to roll dice. If you want, you can roll multiple dice using RPG notation: `!roll 2d12`',
-                '`!giphy`, optionally specifying a username (`!giphy jon`), to see who abuses giphy the most.'
+                '`!giphy`, optionally specifying a username (`!giphy jon`), to see who abuses giphy the most.',
+                '`!help` displays this message.'
             ];
             if (auth.isAdmin(target)) {
                 doc.push(
                     ':toot: _Hey,_ aren\'t you special? Someone gave you admin privs, so you can also ...',
                     '`say <dest> <text>` to send messages to channels or other users',
-                    '`derp set <thing> <score>` to manually adjust the scoreboard. People will see you doing this, so don\'t abuse it.'
+                    '`derp set <thing> <score>` to manually adjust the scoreboard. People will see you doing this, so don\'t abuse it.',
+                    '`!help <name>` to send this message to others.'
                 );
             }
             doc.push(':speech_balloon: Send your questions, comments, requests, and complaints to @jon, who spends too much time on Slack.');
