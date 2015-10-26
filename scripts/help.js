@@ -9,6 +9,9 @@
             var target = (res.match[2] && auth.isAdmin(res.message.user.name))
                 ? res.match[2]
                 : res.message.user.name;
+            console.log(
+                c.xterm(120)(res.message.user.name) + ' requested help for ' + target
+            );
             var doc = [
                 target, // DO NOT REMOVE
                 ':smile: Hi! Most commands work in chat and in private.',
