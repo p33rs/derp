@@ -5,7 +5,7 @@
         var auth = new Auth();
         var Regexp = require('../lib/regexp.js');
         var reg = new Regexp(robot.name);
-        robot.hear(reg.exp('!help\\s?(\\S+)$', 'i'), function(res) {
+        robot.hear(reg.exp('!help\\s?(\\S+)?$', 'i'), function(res) {
             var target = (res.match[2] && auth.isAdmin(res.message.user.name))
                 ? res.match[2]
                 : res.message.user.name;
