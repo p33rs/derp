@@ -4,6 +4,7 @@
         var jsonfile = require('jsonfile');
         var moment = require('moment');
         var filename = '/home/jon/hubot/storage/repost.json';
+        var c = require('cli-color');
 
         robot.hear(/https?:\/\/\S+/i, function(res) {
             var url = res.match[0];
@@ -14,7 +15,9 @@
                 try {
                     current = jsonfile.readFileSync(filename);
                 } catch (e) {
-                    console.log('fs error while getting scores');
+                    console.log(
+                        c.xterm(202)('error') + ' while getting reposts'
+                    );
                 }
             }
 
@@ -24,7 +27,7 @@
                 if (current[room][url].poster === poster) {
                     return;
                 }
-                console.log('repost-shaming ' + poster);
+                console.log(c.xterm(120)(res.message.user.name) + ' got repost-shamed');
                 return res.reply(
                     ':smirk: ' + repost.poster + ' posted that ' + moment(repost.time).fromNow() + '.'
                 );

@@ -5,6 +5,7 @@
         var reg = new Regexp(robot.name);
         var Standup = require('../lib/standup.js');
         var standup = new Standup();
+        var c = require('cli-color');
 
         var datestamp = /^\d{8}$/;
 
@@ -35,14 +36,14 @@
             var params = parse(res.match[3]?res.match[3].split(' '):[]);
             if (params.text) {
                 standup.save(res.message.user.name, params.text);
-                console.log(res.message.user.name + ' checked in.');
+                console.log(c.xterm(120)(res.message.user.name) + ' checked in.');
                 return robot.messageRoom(
                     res.message.user.name,
                     'Thanks for checking in!'
                 );
             } else if (params.name) {
                 var data = standup.load(params.date);
-                console.log(res.message.user.name + ' requested ' + params.name + ' standup.');
+                console.log(c.xterm(120)(res.message.user.name) + ' requested ' + params.name + ' standup.');
                 if (params.name === 'all') {
                     var results = [res.message.user.name];
                     for (var user in data) {
@@ -71,7 +72,7 @@
                         users.push(user);
                     }
                 }
-                console.log(res.message.user.name + ' requested standup status.');
+                console.log(c.xterm(120)(res.message.user.name) + ' requested standup status.');
                 if (users.length) {
                     return res.reply(
                         'The following users checked in: ' + users.join(', ') + '.'

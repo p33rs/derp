@@ -7,6 +7,7 @@
         var auth = new Auth();
         var Regexp = require('../lib/regexp.js');
         var reg = new Regexp(robot.name);
+        var c = require('cli-color');
 
         var emot = function(score) {
             if (score > 50) {
@@ -25,7 +26,7 @@
                 return res.reply(':neutral_face: tl;dr, not counting')
             }
             var score = scoreboard.add(res.match[2]);
-            console.log(res.message.user.name + ' upvoted ' + res.match[2]);
+            console.log(c.xterm(120)(res.message.user.name) + ' upvoted ' + res.match[2]);
             if (res.match[2] === 'derp') {
                 return res.reply(':blush: thanks! i have ' + score.toString() + ' points now.');
             }
@@ -39,7 +40,7 @@
             if (!auth.isAdmin(res.message.user.name)) {
                 return;
             }
-            console.log('you forced ' + res.match[2] + ' to ' + res.match[3]);
+            console.log(c.xterm(120)(res.message.user.name) + ' forced ' + res.match[2] + ' to ' + res.match[3]);
             return res.reply(
                 emot(score) + ' ' + res.match[2] + ' now has ' + score.toString() + ' points.'
             );
@@ -48,7 +49,7 @@
         robot.hear(reg.exp(robot.name + ' get\\s?(.+)', 'i'), function(res) {
             var thing = res.match[2] ? res.match[2] : res.message.user.name;
             var score = scoreboard.get(thing);
-            console.log(res.message.user.name + ' requested ' + thing);
+            console.log(c.xterm(120)(res.message.user.name) + ' requested ' + thing);
             return res.reply(
                 emot(score) + ' ' + res.match[2] + ' now has ' + score.toString() + ' points.'
             );
@@ -78,7 +79,7 @@
                 // result += 'and the loser is ' + tuples[tuples.length - 1][0] + ' (' + parseInt(tuples[tuples.length - 1][1], 10) + ') ';
             }
 
-            console.log(res.message.user.name + ' requested top');
+            console.log(c.xterm(120)(res.message.user.name) + ' requested top');
             return res.reply(result);
         });
 

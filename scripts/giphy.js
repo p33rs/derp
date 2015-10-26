@@ -9,6 +9,7 @@
         var fs = require('fs');
         var jsonfile = require('jsonfile');
         var filename = '/home/jon/hubot/storage/giphy.json';
+        var c = require('cli-color');
 
         var load = function() {
             var current = {}
@@ -16,7 +17,9 @@
                 try {
                     current = jsonfile.readFileSync(filename);
                 } catch (e) {
-                    console.log('fs error while getting giphy records');
+                    console.log(
+                        c.xterm(202)('error') + ' getting giphy records'
+                    );
                 }
             }
             return current;
@@ -24,7 +27,7 @@
 
         robot.hear(reg.exp('/giphy', 'i'), function(res) {
             var user = res.message.user.name;
-            console.log(user + ' posted a giphy.');
+            console.log(c.xterm(120)(user) + ' posted a giphy');
             var current = load();
             if (current[user]) {
                 current[user]++;
@@ -39,7 +42,7 @@
         });
 
         robot.hear(reg.exp('!giphy\\s?@?(\\S+)?', 'i'), function(res) {
-            console.log(res.message.user.name + ' requested gif stats.');
+            console.log(c.xterm(120)(res.message.user.name) + ' requested stats');
             var current = load();
             if (res.match[2]) {
                 return robot.messageRoom(
