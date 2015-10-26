@@ -27,7 +27,7 @@
           var msg = res.match[4];
           var fonts = {
               s: 'Mini',
-              m: 'Ivrit',
+              m: '4Max',
               l: 'Roman',
               b: 'Sub-Zero'
           };
