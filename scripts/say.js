@@ -8,7 +8,7 @@
         var reg = new Regexp(robot.name);
         var c = require('cli-color');
 
-        robot.hear(reg.exp('say (\\S+) (.*)', 'i'), function(res) {
+        robot.hear(reg.exp('say @?(\\S+) (.*)', 'i'), function(res) {
             // must be pm from admin
             if (!auth.isAdmin(res.message.user.name) || res.message.user.name !== res.message.room) {
                 return;
