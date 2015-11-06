@@ -45,14 +45,15 @@
                 var data = standup.load(params.date);
                 console.log(c.xterm(120)(res.message.user.name) + ' requested ' + params.name + ' standup.');
                 if (params.name === 'all') {
-                    var results = [res.message.user.name];
+                    var results = [];
                     for (var user in data) {
                         results.push('@' + user + ': ' + data[user]);
                     }
-                    return robot.messageRoom.apply(
-                        robot,
-                        results
-                    );
+                    if (!results.length) {
+                        return robot.messageRoom(res.message.user.name, 'No standup occurred that day.');
+                    }
+                    results.unshift(res.message.user.name);
+                    return robot.messageRoom.apply(robot, results);
                 } else if (data[params.name]) {
                     return robot.messageRoom(
                         res.message.user.name,
