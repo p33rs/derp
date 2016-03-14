@@ -1,3 +1,4 @@
+return;
 (function() {
     module.exports = function(robot) {
         var fs = require('fs');
