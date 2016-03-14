@@ -10,18 +10,18 @@
         var c = require('cli-color');
 
         var emot = function(score) {
-            if (score > 50) {
+            if (score >= 50) {
                 return ':aaaaa:';
-            } else if (score > 25) {
-                return ':aaa';
-            } else if (score > 10) {
+            } else if (score >= 25) {
+                return ':aaa:';
+            } else if (score >= 10) {
                 return ':golfclap:';
             } else {
                 return ':simple_smile:'
             }
         }
 
-        robot.hear(reg.exp('\\+1 \\@?(.+)'), function(res) {
+        robot.hear(reg.exp('\\+1 \\s*\\@?(.+?)\\s*( for .+)?$'), function(res) {
             if (res.match[2].length > 64) {
                 return res.reply(':neutral_face: tl;dr, not counting')
             }
