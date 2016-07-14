@@ -9,29 +9,46 @@
         var reg = new Regexp(robot.name);
         var c = require('cli-color');
 
+        var aliases = {
+            'nick.obrien': ':nob:',
+            'brendan': ':brendan:',
+            ':nadnerb:': ':brendan:',
+            ':sem:': 'sam',
+            'chirag': 'guns',
+            'nathantruman': ':dogman:',
+            'dogman': ':dogman:'
+        }
+
         var emot = function(score) {
-            if (score >= 50) {
-                return ':aaaaa:';
-            } else if (score >= 25) {
-                return ':aaa:';
-            } else if (score >= 10) {
-                return ':golfclap:';
-            } else {
-                return ':simple_smile:'
+            switch (true) {
+                case score >= 100: return ':usa:';
+                case score >= 75: return ':godbless:';
+                case score >= 50: return ':monocle:';
+                case score >= 25: return ':doge:';
+                case score >= 20: return ':dance:';
+                case score >= 15: return ':toot:';
+                case score >= 10: return ':golfclap:';
+                case score >= 5: return ':grin:'
             }
+            return ':simple_smile:'
         }
 
         robot.hear(reg.exp('\\+1 \\s*\\@?(.+?)\\s*( for .+)?$'), function(res) {
-            if (res.match[2].length > 64) {
+            var target = res.match[2];
+            if (target.length > 64) {
                 return res.reply(':neutral_face: tl;dr, not counting')
             }
-            var score = scoreboard.add(res.match[2]);
-            console.log(c.xterm(120)(res.message.user.name) + ' upvoted ' + res.match[2]);
-            if (res.match[2] === 'derp') {
+            target = target.toLowerCase();
+            if (aliases.hasOwnProperty(target)) {
+                target = aliases[target];
+            }
+            var score = scoreboard.add(target.toLowerCase());
+            console.log(c.xterm(120)(res.message.user.name) + ' upvoted ' + target);
+            if (target === 'derp') {
                 return res.reply(':blush: thanks! i have ' + score.toString() + ' points now.');
             }
             return res.reply(
-                emot(score) + ' ' + res.match[2] + ' now has ' + score.toString() + ' points.'
+                emot(score) + ' ' + target + ' now has ' + score.toString() + ' points.'
             );
         });
 
@@ -55,7 +72,7 @@
             );
         });
 
-        robot.hear(reg.exp(robot.name + ' top', 'i'), function(res) {
+        robot.hear(reg.exp(robot.name + ' top\\s?(\\d+)?', 'i'), function(res) {
             var score = scoreboard.get();
             var tuples = [];
             for (var key in score) {
@@ -70,8 +87,10 @@
                 return a > b ? -1 : (a < b ? 1 : 0);
             });
 
+            var userLimit = parseInt(res.match[2],10);
+            var limit = userLimit && userLimit <= 15 ? userLimit : 5;
             var result = ':eng101: The winners are: ';
-            for (var i = 0; i < tuples.length && i < 5; i++) {
+            for (var i = 0; i < tuples.length && i < limit; i++) {
                 result += tuples[i][0] + ' (' + parseInt(tuples[i][1], 10) + ') ';
             }
 
